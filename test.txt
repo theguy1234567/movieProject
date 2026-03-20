@@ -1,0 +1,91 @@
+import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Dashboard() {
+  const username = localStorage.getItem("username");
+  const navigate = useNavigate();
+
+  const logoutUser = async (e) => {
+    e.preventDefault();
+    const res = await fetch("http://localhost:3000/api/v1/auth/logout", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        console.log(res.json);
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.log("something went wrong", error);
+      });
+  };
+
+  return (
+    <>
+      <div className="bg-pink-200 h-[500px] w-full rounded-b-3xl ">
+        <h1 className="text-6xl text-red-500 font-extrabold">
+          welcome {username}!
+        </h1>
+        <button className="bg-amber-200 p-5 rounded-2xl" onClick={logoutUser}>
+          logout
+        </button>
+      </div>
+    </>
+  );
+}
+export default Dashboard;
+
+
+
+
+
+
+
+
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Carousel from "./Carousel.jsx";
+import Movies from "./Movies.jsx";
+import { getPopularMovies } from "../../services/tdmb.js";
+function Main_page() {
+  let slides = [
+    "https://picsum.photos/1200/500?random=1",
+    "https://picsum.photos/1200/500?random=2",
+    "https://picsum.photos/1200/500?random=3",
+  ];
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const loadMovies = async () => {
+      const data = await getPopularMovies();
+      setMovies(data.results.slice(0, 5));
+    };
+    loadMovies();
+  }, []);
+
+  return (
+    <>
+      <div className="w-full pt-10">
+        <Carousel slides={slides} />
+      </div>
+      <div className="bg-amber-200 h-[150px]">
+        <div className="grid grid-cols-5 gap-4 p-4">
+          {movies.map((movie) => (
+            <div key={movie.id}>
+              <img
+                className="rounded"
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+              />
+              <p className="text-sm mt-2">{movie.title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+export default Main_page;

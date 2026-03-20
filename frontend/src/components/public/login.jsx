@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/UserContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const handlelogin = async (e) => {
     e.preventDefault();
@@ -24,6 +26,7 @@ function Login() {
       const res = await fetch("http://localhost:3000/api/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(postData),
       });
       let data = await res.json();
@@ -35,7 +38,8 @@ function Login() {
       if (res.ok) {
         setSuccess(message);
         localStorage.setItem("username", data.data.user.username);
-        navigate("/dashboard");
+        setUser(data.data.user);
+        navigate("/dashboard/main");
       }
     } catch (error) {
       console.log("failed", error);
