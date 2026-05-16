@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "./App.css";
 
-import App from "./App.jsx";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -14,10 +14,10 @@ import Login from "./components/public/login.jsx";
 import Layout from "./layout.jsx";
 import Dashboard from "./components/dashboard/Main_page.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
-import Dashboard_layout from "./components/dashboard/dashboard_layout.jsx";
+import Dashboard_layout from "./components/dashboard/Dashboard_layout.jsx";
 import Main_page from "./components/dashboard/Main_page.jsx";
 import Movies from "./components/dashboard/Movies.jsx";
-import Watchlist from "./components/dashboard/watchlist.jsx";
+import Watchlist from "./components/dashboard/Watchlist.jsx";
 import Profile from "./components/dashboard/Profile.jsx";
 import UserContextProvider from "./context/UserContextProvider.jsx";
 import MovieDetails from "./components/dashboard/MovieDetails.jsx";
@@ -25,7 +25,8 @@ import MovieDetails from "./components/dashboard/MovieDetails.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
-      <Route path="home" element={<Homepage />} />
+      <Route index element={<Homepage />} />
+      <Route path="/home" element={<Homepage />} />
       <Route path="register" element={<Register />} />
       <Route path="login" element={<Login />} />
       <Route

@@ -57,6 +57,19 @@ const userSchema = new Schema(
     emailverificationexpiry: {
       type: Date,
     },
+    watchlist: [
+      {
+        movieId: {
+          type: Number,
+          required: true,
+        },
+        title: String,
+        poster_path: String,
+        vote_average: Number,
+        release_date: String,
+        overview: String,
+      },
+    ],
   },
   {
     timestamps: true,

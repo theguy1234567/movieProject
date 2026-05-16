@@ -24,11 +24,14 @@ import healthcheckRouter from "./routes/healthcheck.routes.js";
 import authrouter from "./routes/auth.routes.js";
 
 import movierouter from "./routes/movie.route.js";
+import watchlistRouter from "./routes/watchlist.routes.js";
 app.use("/api/v1/healthcheck", healthcheckRouter);
 app.use("/api/v1/auth", authrouter);
 app.use("/api/movies", movierouter);
+app.use("/api/v1/watchlist", watchlistRouter);
 
 app.get("/", (req, res) => {
+  
   res.send("hello World!");
 });
 

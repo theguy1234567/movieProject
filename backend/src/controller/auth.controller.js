@@ -49,7 +49,7 @@ const registerUser = asyncHandler(async (req, res) => {
     username,
     isEmailVerified: false,
   });
-
+ 
   const { unhashedtoken, hashedtoken, tokenexpiry } = user.genTEMPTOKEN();
   user.emailverificationtoken = hashedtoken;
   user.emailverificationexpiry = tokenexpiry;
